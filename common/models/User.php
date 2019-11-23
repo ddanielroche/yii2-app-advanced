@@ -2,7 +2,7 @@
 namespace common\models;
 
 use Yii;
-use yii\base\NotSupportedException;
+use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -71,7 +71,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::findByUsername($token);
     }
 
     /**
@@ -172,6 +172,7 @@ class User extends ActiveRecord implements IdentityInterface
      * Generates password hash from password and sets it to the model
      *
      * @param string $password
+     * @throws Exception
      */
     public function setPassword($password)
     {
@@ -180,6 +181,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates "remember me" authentication key
+     * @throws Exception
      */
     public function generateAuthKey()
     {
@@ -188,6 +190,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates new password reset token
+     * @throws Exception
      */
     public function generatePasswordResetToken()
     {
@@ -196,6 +199,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     /**
      * Generates new token for email verification
+     * @throws Exception
      */
     public function generateEmailVerificationToken()
     {

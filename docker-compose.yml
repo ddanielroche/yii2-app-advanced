@@ -8,6 +8,8 @@ services:
       - mysql
     ports:
       - 20080:80
+    environment:
+      - PHP_ENABLE_XDEBUG=1
     volumes:
       # Re-use local composer cache via host-volume
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
@@ -26,6 +28,20 @@ services:
       # Mount source-code for development
       - ./:/app
 
+  api:
+    build: api
+    depends_on:
+      - mysql
+    ports:
+      - 22080:80
+    environment:
+      - PHP_ENABLE_XDEBUG=1
+    volumes:
+      # Re-use local composer cache via host-volume
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      # Mount source-code for development
+      - ./:/app
+
   mysql:
     image: mysql:5.7
     ports:
@@ -35,6 +51,8 @@ services:
       - MYSQL_DATABASE=yii2advanced
       - MYSQL_USER=yii2advanced
       - MYSQL_PASSWORD=secret
+    volumes:
+      - mysql_data:/var/lib/mysql
 
   #pgsql:
   #  image: postgres:9.5
@@ -42,3 +60,7 @@ services:
   #    - POSTGRES_DB=yii2advanced
   #    - POSTGRES_USER=yii2advanced
   #    - POSTGRES_PASSWORD=secret
+
+volumes:
+  mysql_data:
+    driver: local
