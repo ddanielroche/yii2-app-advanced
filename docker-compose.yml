@@ -3,7 +3,11 @@ version: '3.2'
 services:
 
   frontend:
-    build: frontend
+    build:
+      context: ./frontend
+      dockerfile: ../Dockerfile
+      args:
+        DOCUMENT_ROOT: /app/frontend/web
     depends_on:
       - mysql
     ports:
@@ -17,7 +21,11 @@ services:
       - ./:/app
 
   backend:
-    build: backend
+    build:
+      context: ./backend
+      dockerfile: ../Dockerfile
+      args:
+        DOCUMENT_ROOT: /app/backend/web
     depends_on:
       - mysql
     ports:
@@ -29,7 +37,11 @@ services:
       - ./:/app
 
   api:
-    build: api
+    build:
+      context: ./api
+      dockerfile: ../Dockerfile
+      args:
+        DOCUMENT_ROOT: /app/api/web
     depends_on:
       - mysql
     ports:

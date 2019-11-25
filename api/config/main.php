@@ -27,10 +27,16 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
-            'showScriptName' => true,
+            'showScriptName' => false,
             'rules' => [
+                // Load Swagger documentation by default
+                'GET ' => 'site/doc',
+                'GET site' => 'site/doc',
+                'GET site/doc' => 'site/doc',
+                'GET site/api' => 'site/api',
+
+                // User Rules
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'site'],
             ],
         ],
     ],
